@@ -9,8 +9,8 @@ import numpy as np
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 
-REPO_DIR = pathlib.Path(__file__).parent.parent.absolute()
-DOWNLOAD_DIR = os.path.join(REPO_DIR, 'datasets')
+# REPO_DIR = pathlib.Path(__file__).parent.parent.absolute()
+DOWNLOAD_DIR = os.path.join("data_dir", 'cifar_mnist')
 
 def extract_tensors_from_loader(dl, repeat=1, transform_fn=None):
     X, Y = [], []
