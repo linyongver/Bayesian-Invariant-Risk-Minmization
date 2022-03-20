@@ -97,7 +97,7 @@ def get_coco_handles(num_classes=2, sp_ratio_list=None, noise_ratio=0, dataset='
         raise Exception
 
 def get_spcoco_dataset(sp_ratio_list=None, noise_ratio=None, num_classes=None, flags=None):
-    coco_transform = get_transform_coco(flags.num_classes)
+    coco_transform = get_transform_coco(2)
     train_data_handle, _, _, _, _ = get_coco_handles(
         num_classes=num_classes,
         sp_ratio_list=sp_ratio_list,

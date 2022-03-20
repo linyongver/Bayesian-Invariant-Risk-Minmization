@@ -463,7 +463,7 @@ class COCOcolor_LYPD(LYDataProvider):
         self.train_dataset, self.test_dataset = get_spcoco_dataset(
             sp_ratio_list=sp_ratio_list,
             noise_ratio=self.flags.noise_ratio,
-            num_classes=self.flags.num_classes,
+            num_classes=2,
             flags=self.flags)
         self.train_loader = torch.utils.data.DataLoader(
             dataset=self.train_dataset,
