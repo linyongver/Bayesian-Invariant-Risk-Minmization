@@ -1,6 +1,5 @@
 import os
 from mnistcifar_utils import get_mnist_cifar_env
-# from mnistcifar_utils import get_mnist_cifar_env
 import pdb
 import torch
 import numpy as np

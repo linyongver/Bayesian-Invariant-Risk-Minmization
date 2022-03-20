@@ -251,11 +251,8 @@ def combine_colored_datasets_by_envs(Xtrm, Ytrm, Xtrc, Ytrc, Xtem, Ytem, Xtec, Y
             label_noise = np_bernoulli(
                 label_noise_ratio,
                 len(Yc))
-            print("Adding Noise to Label, len(Y)=%s, Label_noise=%s" % (len(Yc), sum(label_noise)))
             Yc = np_xor(Yc,label_noise)
-    print("Xmp", Xmp.shape, Xmn.shape)
     Xcp, Xcn = partition(Xc, Yc)
-    print("Xcp", Xcp.shape, Xcn.shape)
     n = min(map(len, [Xmp, Xmn, Xcp, Xcn]))
     Xmp, Xmn, Xcp, Xcn = map(lambda Z: Z[:n], [Xmp, Xmn, Xcp, Xcn])
     train_envs = len(envs) - 1
@@ -390,12 +387,9 @@ def combine_datasets_by_envs(Xtrm, Ytrm, Xtrc, Ytrc, Xtem, Ytem, Xtec, Ytec, env
             label_noise = np_bernoulli(
                 label_noise_ratio,
                 len(Yc))
-            print("Adding Noise to Label, len(Y)=%s, Label_noise=%s" % (len(Yc), sum(label_noise)))
             Yc = np_xor(Yc,label_noise)
     Xmp, Xmn = partition(Xm, Ym)
-    print("Xmp", Xmp.shape, Xmn.shape)
     Xcp, Xcn = partition(Xc, Yc)
-    print("Xcp", Xcp.shape, Xcn.shape)
     n = min(map(len, [Xmp, Xmn, Xcp, Xcn]))
     Xmp, Xmn, Xcp, Xcn = map(lambda Z: Z[:n], [Xmp, Xmn, Xcp, Xcn])
     train_envs = len(envs) - 1
@@ -409,7 +403,6 @@ def combine_datasets_by_envs(Xtrm, Ytrm, Xtrc, Ytrc, Xtem, Ytem, Xtec, Ytec, env
         cpmp, cnmn, cpmn, cnmp = \
             one_env.cpmp, one_env.cnmn, one_env.cpmn, one_env.cnmp
 
-        print("env=%s" % i, cpmp, cnmn, cpmn, cnmp)
         x11=XmpCube.send(cpmp)
         x22=XcpCube.send(cpmp)
         Xcpmp = _combine(x11, x22)
@@ -435,11 +428,9 @@ def combine_datasets_by_envs(Xtrm, Ytrm, Xtrc, Ytrc, Xtem, Ytem, Xtec, Ytec, env
 
         Yn = np.zeros(len(Xn))
         Sp = np.concatenate([Sp_p, Sp_n], axis=0)
-        print("xn", len(Xn), "xp", len(Xp))
         X = np.concatenate([Xp, Xn], axis=0)
         Y = np.concatenate([Yp, Yn], axis=0)
         if color_spurious:
-            print("Adding color as spurious feature!")
             color_noise = np_bernoulli(
                 1 - one_env.cons_ratio,
                 len(Y))
