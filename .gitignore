@@ -1,0 +1,12 @@
+.DS_Store
+time_log_rebuttal.txt
+resource/
+data/*
+coco
+meta_run
+scripts
+wandb
+logs
+ipynb_checkpoints
+*.ipynb
+__pycache__
