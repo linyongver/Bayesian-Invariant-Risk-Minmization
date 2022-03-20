@@ -1,4 +1,3 @@
-# from mnistcifar_utils import get_mnist_cifar_env
 import pdb
 import torch
 import numpy as np
@@ -60,17 +59,11 @@ class COCODataset(object):
         return x,y,g, sp
 
 def get_coco_handles(num_classes=2, sp_ratio_list=None, noise_ratio=0, dataset='colour', train_test=None, flags=None):
-    # data_dir = "coco"
     data_dir = "/home/ylindf/projects/data/SPCOCO/coco"
     if dataset == 'places':
         dataset_name = 'cocoplaces_vf_{}_{}'.format(num_classes, confounder_strength)
-        original_dirname = os.path.join(data_dir, dataset_name) # /home/ylindf/data/predictive_group_invariance/coco
+        original_dirname = os.path.join(data_dir, dataset_name)
     elif dataset == 'colour':
-#         dataset_name = 'cococolours_vf_{}_{}'.format(num_classes, confounder_strength)
-        # dataset_name = 'cococolours_vf_num_class_{}_sp_{}_noise_{}'.format(
-        #     num_classes,
-        #     "_".join([str(x) for x in sp_ratio_list]),
-        #     noise_ratio)
 
         if flags.grayscale_model:
             dataset_name = 'cocogrey__class_{}_noise_{}_sz_{}'.format(
