@@ -31,7 +31,7 @@ from utils import LOGIT_LYDP, REG_LYDP, CMNIST_LYDP
 from utils import CIFAR_LYPD, COCOcolor_LYPD
 from utils import CMNISTFULL_LYDP
 from utils import mean_nll_multi_class,eval_acc_multi_class,mean_accuracy_multi_class
-from global_utils import args2header, save_args, save_cmd, LYCSVLogger
+from helpers import args2header, save_args, save_cmd, LYCSVLogger
 
 
 
@@ -54,8 +54,6 @@ parser.add_argument('--hidden_dim', type=int, default=16)
 parser.add_argument('--cons_ratio', type=str, default="0.999_0.7_0.1")
 parser.add_argument('--noise_ratio', type=float, default=0)
 parser.add_argument('--step_gamma', type=float, default=0.1)
-parser.add_argument('--step_round', type=int, default=3)
-parser.add_argument('--inner_steps', type=int, default=1)
 parser.add_argument('--penalty_anneal_iters', type=int, default=200)
 parser.add_argument('--penalty_weight', type=float, default=10000.0)
 parser.add_argument('--steps', type=int, default=501)
@@ -68,14 +66,12 @@ torch.manual_seed(flags.seed)
 np.random.seed(flags.seed)
 
 
-default_dict = {"inner_steps": 1, "step_round":3, "step_gamma":0.1, "hidden_dim":390,  "data_num":3400, "grayscale_model": False, "l2_regularizer_weight":0.001, "penalty_anneal_iters":200, "lr": 0.0004, "steps":1500, "envs_num":2, "penalty_weight":10000, "cons_ratio": "0.9_0.8_0.1", "noise_ratio":0.25}
+default_dict = {"step_gamma":0.1, "hidden_dim":390,  "data_num":3400, "grayscale_model": False, "l2_regularizer_weight":0.001, "penalty_anneal_iters":200, "lr": 0.0004, "steps":1500, "envs_num":2, "penalty_weight":10000, "cons_ratio": "0.9_0.8_0.1", "noise_ratio":0.25}
 exclude_names = [
     "print_every",
     "variance_gamma",
     "data_num",
     "hidden_dim",
-    "step_round",
-    "inner_steps",
     "grayscale_model"
 ]
 

@@ -6,7 +6,6 @@ import random
 import pandas as pd
 
 from PIL import Image
-# sys.path.append('/scratch/faruk/data/cocoapi/PythonAPI/')  # install cocoapi and change path here
 from pycocotools.coco import COCO
 from skimage.transform import resize
 
@@ -27,7 +26,7 @@ parser.add_argument('--image_scale', type=int, default=64)
 flags = parser.parse_args()
 image_scale = flags.image_scale
 sp_ratio_list = [float(x) for x in flags.cons_ratio.split("_")]
-print("sp_ratio_list=", sp_ratio_list)
+print("Preparing ColoredObject dataset, please wait.")
 CLASSES = [
         # vehiles
         [('truck', 2000, 300), # 6k+
@@ -52,10 +51,8 @@ te_i = flags.te_i# *NUM_CLASSES
 total_train_num = np.sum([np.sum([x[1] for x in c]) for c in CLASSES])
 total_test_num =  np.sum([np.sum([x[2] for x in c]) for c in CLASSES])
 
-print("total_train_num", total_train_num)
-print("total_test_num", total_test_num)
 
-output_dir = os.path.join("/home/ylindf/projects/data/SPCOCO", 'coco')
+output_dir = os.path.join("data_dir/SPCOCO", 'coco')
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
@@ -129,7 +126,7 @@ id_test_file.create_dataset('e', (total_test_num,), dtype='int32')
 
 
 
-coco = COCO('/home/ylindf/data/coco/annotations/instances_train2017.json')
+coco = COCO('data_dir/coco/annotations/instances_train2017.json')
 cats = coco.loadCats(coco.getCatIds())
 
 def coco_on_color(im, catIds, class_, sp_ratio, noise_ratio):
@@ -148,7 +145,7 @@ def coco_on_color(im, catIds, class_, sp_ratio, noise_ratio):
         return None, None, None
 
     try:
-        I = np.asarray(Image.open(f"/import/home/ylindf/data/coco/train2017/" + im["file_name"]))
+        I = np.asarray(Image.open(f"data_dir/coco/train2017/" + im["file_name"]))
     except:
         return None, None, None
     if len(I.shape) == 2:
@@ -189,15 +186,12 @@ for c in range(NUM_CLASSES):
         train_num = subc[1]
         test_num = subc[2]
 
-        print("generating class %s" % c, "with", subc)
         catIds = coco.getCatIds(catNms=[class_name])
         imgIds = coco.getImgIds(catIds=catIds)
         images = coco.loadImgs(imgIds)
 
         i = -1
-        print('Class {} (train) : #images = {}'.format(c, len(images)))
         for ie in range(2): # 2 envs
-            print("generateing training env %s" % ie)
             sp_ratio = sp_ratio_list[ie]
             tr_si = 0
             while tr_si < train_num // 2: #
@@ -215,18 +209,13 @@ for c in range(NUM_CLASSES):
                 tr_s += 1
                 tr_si += 1
                 if tr_si % 50 == 0:
-                    print('Generating class={} e={} id={}'.format(c, ie, tr_s))
                     time.sleep(1)
-            print("end in %s" % tr_s)
-        print(' ')
 
         #--------test-----------#
         te_si = 0
-        print('Class {} (test) : '.format(c), end=' ')
         while te_si < test_num:
             i += 1
             if te_si % 50 == 0:
-                print('Generating testing', te_si)
                 time.sleep(1)
             # In-dist test:
             ########################################
@@ -245,3 +234,4 @@ for c in range(NUM_CLASSES):
             te_si += 1
 train_file.close()
 id_test_file.close()
+print("Finished!")

@@ -1,4 +1,5 @@
 .DS_Store
+data_dir
 time_log_rebuttal.txt
 resource/
 data/*

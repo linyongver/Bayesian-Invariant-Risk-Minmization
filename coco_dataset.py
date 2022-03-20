@@ -59,7 +59,7 @@ class COCODataset(object):
         return x,y,g, sp
 
 def get_coco_handles(num_classes=2, sp_ratio_list=None, noise_ratio=0, dataset='colour', train_test=None, flags=None):
-    data_dir = "/home/ylindf/projects/data/SPCOCO/coco"
+    data_dir = "data_dir/SPCOCO/coco"
     if dataset == 'places':
         dataset_name = 'cocoplaces_vf_{}_{}'.format(num_classes, confounder_strength)
         original_dirname = os.path.join(data_dir, dataset_name)
