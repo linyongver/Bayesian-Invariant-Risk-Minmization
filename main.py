@@ -12,7 +12,6 @@ import torch.optim.lr_scheduler as lr_scheduler
 from torchvision import datasets
 import pandas as pd
 # import wandb
-import pdb
 import os
 import sys
 from torch import nn, optim, autograd
@@ -24,8 +23,7 @@ from model import Y_EBD, PredEnvHatY, PredEnvHatYSep, PredEnvYY
 from model import InferEnv
 from model import MLP, MLPFull
 
-# sys.path.append('/home/ylindf/projects/tools')
-# sys.path.append('/home/ylindf/projects/invariant/CMNIST/common')
+sys.path.append('dataset_scripts')
 from utils import concat_envs,eval_acc_class,eval_acc_reg,mean_nll_class,mean_accuracy_class,mean_nll_reg,mean_accuracy_reg,pretty_print
 from utils import LOGIT_LYDP, REG_LYDP, CMNIST_LYDP
 from utils import CIFAR_LYPD, COCOcolor_LYPD
