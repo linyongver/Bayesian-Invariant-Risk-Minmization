@@ -32,7 +32,6 @@ If you use or extend our work, please cite the following paper:
       Hao, Wang  and
       Tong, Zhang",
     booktitle = "IEEE/CVF Conference on Computer Vision and Pattern Recognition 2022",
-    month = aug,
     year = "2022",
     address = "Online"
 }
