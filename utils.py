@@ -359,9 +359,9 @@ class LYDataProvider(object):
     def fetch_test(self):
         pass
 
-class LYDataProviderMK(LYDataProvider):
+class IRMDataProvider(LYDataProvider):
     def __init__(self, flags):
-        super(LYDataProviderMK, self).__init__()
+        super(IRMDataProvider, self).__init__()
 
     def preprocess_data(self):
         self.train_x, self.train_y, self.train_g, self.train_c= concat_envs(self.envs[:-1])
@@ -373,28 +373,28 @@ class LYDataProviderMK(LYDataProvider):
     def fetch_test(self):
         return self.test_x, self.test_y, self.test_g, self.test_c
 
-class CMNIST_LYDP(LYDataProviderMK):
+class CMNIST_LYDP(IRMDataProvider):
     def __init__(self, flags):
         super(CMNIST_LYDP, self).__init__(flags)
         self.flags = flags
         self.envs = make_mnist_envs(flags)
         self.preprocess_data()
 
-class CMNISTFULL_LYDP(LYDataProviderMK):
+class CMNISTFULL_LYDP(IRMDataProvider):
     def __init__(self, flags):
         super(CMNISTFULL_LYDP, self).__init__(flags)
         self.flags = flags
         self.envs = make_fullmnist_envs(flags)
         self.preprocess_data()
 
-class LOGIT_LYDP(LYDataProviderMK):
+class LOGIT_LYDP(IRMDataProvider):
     def __init__(self, flags):
         super(LOGIT_LYDP, self).__init__(flags)
         self.flags = flags
         self.envs = make_logit_envs(flags.data_num, flags)
         self.preprocess_data()
 
-class REG_LYDP(LYDataProviderMK):
+class REG_LYDP(IRMDataProvider):
     def __init__(self, flags):
         super(REG_LYDP, self).__init__(flags)
         self.flags = flags
