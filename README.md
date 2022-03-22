@@ -23,7 +23,9 @@ Important arguments:
 * CMNIST: the most popular dataset in IRM literatures. The invariant feature is the shape of the digit from MNIST and the spurious feature is the attached color.
 * ColoredObject: Following [Faruk-Ahmed](https://github.com/Faruk-Ahmed/predictive_group_invariance), we construct coloredObject by superimposing objects extracted from MSCOCO on a colored background (spurious feature)
 * CifarMnist: Following [Shah](https://arxiv.org/abs/2006.07710), we construct each image in CifarMnist by  by concatenating two component images: CIFAR-10 (invariant) and MNIST (spurious).
+
 Refer to Section 5 of our paper for detailed discription of the datasets.
+
 ## Use with your own data
 
 # Contact information
