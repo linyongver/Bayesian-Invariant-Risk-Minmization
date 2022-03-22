@@ -12,8 +12,9 @@ To install the necessary packages for the project, please run: `pip install -r r
 
 # Quick Start (For reproducing results)
 1. To perform BIRM on CMNIST (with 20K training data). Run the command `sh auto_CMNIST.sh`. The expected test accuracy is `67.0±1.8`.
-2. To perform BIRM on ColoredObject. Run the command `sh auto_CifarMnist.sh`. The expected test accuracy is `78.1±0.6`.
+2. To perform BIRM on ColoredObject. First run `sh prepare_coco_dataset.sh` to download MSCOCO dataset and preprocess the images. Second run the command `sh auto_CifarMnist.sh` to train BRIM. The expected test accuracy is `78.1±0.6`.
 3. To perform BIRM on CifarMnist. Run the command `sh auto_ColoredObject.sh`. The expected test accuracy is `59.3±2.3`.
+
 Important arguments:
 * `dataset`: chosen in `mnist`, `cifar` and `coco_color`;
 * `lr`: learning rate;
@@ -30,7 +31,15 @@ Important arguments:
 Refer to Section 5 of our paper for detailed discription of the datasets.
 
 ## Use with your own data
+We provider interface for you to include your own data. You need to inherit the 
+ class `IRMDataProvider`, and re-implement the function `fetch_train` and `fetch_test`. The main function will call `fetch_train` to get training data for each step. `fetch_train` should return the following values:
 
+* `train_x`: the feature tensor;
+* `train_y`: the label tensor;
+* `train_g`: the tensor contains values indicating which environmnets the data are from;
+* `train_g`(optional): the tensor contains values indicating whether the spurious features align with the labels.
+
+The structure of the return value of `fetch_test` are similar with `fetch_train`.
 # Contact information
 
 For help or issues using Bayesian Invariant Risk Minimization, please submit a GitHub issue.
