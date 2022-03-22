@@ -11,9 +11,9 @@ Our code works with the following environment.
 To install the necessary packages for the project, please run: `pip install -r requirements.txt`.
 
 # Quick Start (For reproducing results)
-1. To perform BIRM on CMNIST. Run the command `sh auto_CMNIST.sh`. The expected test accuracy is `1`.
-2. To perform BIRM on ColoredObject. Run the command `sh auto_CifarMnist.sh`. The expected test accuracy is `1`.
-3. To perform BIRM on CifarMnist. Run the command `sh auto_ColoredObject.sh`. The expected test accuracy is `1`.
+1. To perform BIRM on CMNIST. Run the command `sh auto_CMNIST.sh`. The expected test accuracy is `67.0±1.8`.
+2. To perform BIRM on ColoredObject. Run the command `sh auto_CifarMnist.sh`. The expected test accuracy is `78.1±0.6`.
+3. To perform BIRM on CifarMnist. Run the command `sh auto_ColoredObject.sh`. The expected test accuracy is `59.3±2.3`.
 Important arguments:
 * `dataset`: chosen in `mnist`, `cifar` and `coco_color`.
 * `penalty_weight`:  the weight of the BIRM penalty.
