@@ -37,7 +37,7 @@ We provider interface for you to include your own data. You need to inherit the
 * `train_x`: the feature tensor;
 * `train_y`: the label tensor;
 * `train_g`: the tensor contains values indicating which environmnets the data are from;
-* `train_g`(optional): the tensor contains values indicating whether the spurious features align with the labels.
+* `train_c`(optional): the tensor contains values indicating whether the spurious features align with the labels.
 
 The structure of the return value of `fetch_test` are similar with `fetch_train`.
 # Contact information
