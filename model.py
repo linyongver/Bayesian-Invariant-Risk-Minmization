@@ -121,10 +121,7 @@ class MLP(nn.Module):
         else:
           lin1 = nn.Linear(2 * 14 * 14, flags.hidden_dim)
         lin2 = nn.Linear(flags.hidden_dim, flags.hidden_dim)
-        if flags.num_classes == 2:
-            lin3 = nn.Linear(flags.hidden_dim, 1)
-        else:
-            raise Exception
+        lin3 = nn.Linear(flags.hidden_dim, 1)
         for lin in [lin1, lin2, lin3]:
           nn.init.xavier_uniform_(lin.weight)
           nn.init.zeros_(lin.bias)

@@ -1,0 +1,1 @@
+python main.py --l2_regularizer_weight 0.001 --lr 0.01 --cons_ratio 0.999_0.7_0.1 --noise_ratio 0.05 --image_scale 32 --batch_size 1000 --penalty_anneal_iter 80 --opt sgd --print_every 10 --penalty_weight 10000 --steps 800 --envs_num 2 --n_restarts 1 --dataset coco_color --step_gamma 0.1 --irm_type bayes_rex --prior_sd_coef 1000 --grayscale_model 0 --data_num 12000
