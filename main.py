@@ -16,7 +16,6 @@ sys.path.append('dataset_scripts')
 from utils import concat_envs,eval_acc_class,eval_acc_reg,mean_nll_class,mean_accuracy_class,mean_nll_reg,mean_accuracy_reg,pretty_print
 from utils import CMNIST_LYDP
 from utils import CIFAR_LYPD, COCOcolor_LYPD
-from utils import CMNISTFULL_LYDP
 from utils import mean_nll_multi_class,eval_acc_multi_class,mean_accuracy_multi_class
 from helpers import args2header, save_args, save_cmd, LYCSVLogger
 
@@ -25,7 +24,7 @@ parser = argparse.ArgumentParser(description='Colored MNIST')
 parser.add_argument('--envs_num', type=int, default=2)
 parser.add_argument('--batch_size', type=int, default=1024)
 parser.add_argument('--seed', type=int, default=0)
-parser.add_argument('--dataset', type=str, default="mnist", choices=["cifar","coco_color", "mnist","mnistfull", "logit", "reg"])
+parser.add_argument('--dataset', type=str, default="CMNIST", choices=["CifarMnist","ColoredObject", "CMNIST"])
 parser.add_argument('--opt', type=str, default="adam", choices=["adam", "sgd"])
 parser.add_argument('--l2_regularizer_weight', type=float,default=0.001)
 parser.add_argument('--print_every', type=int,default=100)
@@ -82,7 +81,7 @@ final_test_accs = []
 for restart in range(flags.n_restarts):
     print("Restart", restart)
 
-    if flags.dataset == "mnist":
+    if flags.dataset == "CMNIST":
         dp = CMNIST_LYDP(flags)
         test_batch_num = 1
         test_batch_fetcher = dp.fetch_test
@@ -91,7 +90,7 @@ for restart in range(flags.n_restarts):
         mean_accuracy = mean_accuracy_class
         eval_acc = eval_acc_class
         flags.env_type = "linear"
-    elif flags.dataset == "cifar":
+    elif flags.dataset == "CifarMnist":
         dp = CIFAR_LYPD(flags)
         test_batch_num = 1
         test_batch_fetcher = dp.fetch_test
@@ -101,7 +100,7 @@ for restart in range(flags.n_restarts):
         mean_nll = mean_nll_class
         mean_accuracy = mean_accuracy_class
         eval_acc = eval_acc_class
-    elif flags.dataset == "coco_color":
+    elif flags.dataset == "ColoredObject":
         dp = COCOcolor_LYPD(flags)
         test_batch_num = dp.test_batchs()
         test_batch_fetcher = dp.fetch_test_batch
@@ -131,7 +130,7 @@ for restart in range(flags.n_restarts):
         step_size=int(flags.steps/2),
         gamma=flags.step_gamma)
 
-    pretty_print('step', 'train acc', 'train penalty', 'test acc', "test_minacc", "test_majacc")
+    pretty_print('step', 'train loss', 'train penalty', 'test acc')
     if flags.irm_type == "cirm_sep":
         pred_env_haty_sep.init_sep_by_share(pred_env_haty)
     for step in range(flags.steps):
@@ -241,7 +240,7 @@ for restart in range(flags.n_restarts):
         lr_schd.step()
 
         if step % flags.print_every == 0:
-            if flags.dataset != 'cifar':
+            if flags.dataset != 'CifarMnist':
                 mlp.eval()
             test_acc_list = []
             test_minacc_list = []
@@ -259,11 +258,9 @@ for restart in range(flags.n_restarts):
             test_acc, test_minacc, test_majacc = torch.Tensor(test_acc_list).sum()/total_data, torch.Tensor(test_minacc_list).sum()/total_data, torch.Tensor(test_majacc_list).sum()/total_data
             pretty_print(
                 np.int32(step),
-                train_acc.detach().cpu().numpy(),
+                loss.detach().cpu().numpy(),
                 train_penalty.detach().cpu().numpy(),
                 test_acc.detach().cpu().numpy(),
-                test_minacc.detach().cpu().numpy(),
-                test_majacc.detach().cpu().numpy()
             )
             stats_dict = {
                 "train_nll": train_nll.detach().cpu().numpy(),
