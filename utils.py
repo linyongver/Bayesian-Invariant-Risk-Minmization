@@ -1,5 +1,5 @@
 import argparse
-import pdb
+import random
 from cm_spurious_dataset import get_data_loader_cifarminst
 from coco_dataset import get_spcoco_dataset
 import math
@@ -405,6 +405,8 @@ class CIFAR_LYPD(LYDataProvider):
     def __init__(self, flags):
         super(CIFAR_LYPD, self).__init__()
         self.flags = flags
+        np.random.seed(flags.seed)
+        random.seed(1) # Fix the random seed of dataset
         self.preprocess_data()
 
     def preprocess_data(self):

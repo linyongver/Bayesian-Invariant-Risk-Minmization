@@ -1,4 +1,5 @@
 import argparse
+import random
 import numpy as np
 import torch
 import torch.optim.lr_scheduler as lr_scheduler
@@ -17,7 +18,6 @@ from utils import concat_envs,eval_acc_class,eval_acc_reg,mean_nll_class,mean_ac
 from utils import CMNIST_LYDP
 from utils import CIFAR_LYPD, COCOcolor_LYPD
 from utils import mean_nll_multi_class,eval_acc_multi_class,mean_accuracy_multi_class
-from helpers import args2header, save_args, save_cmd, LYCSVLogger
 
 
 parser = argparse.ArgumentParser(description='Colored MNIST')
@@ -44,42 +44,18 @@ parser.add_argument('--penalty_weight', type=float, default=10000.0)
 parser.add_argument('--steps', type=int, default=501)
 parser.add_argument('--grayscale_model', type=int, default=0)
 flags = parser.parse_args()
-print("batch_size is", flags.batch_size)
 irm_type = flags.irm_type
 
 torch.manual_seed(flags.seed)
 np.random.seed(flags.seed)
-
-
-default_dict = {"step_gamma":0.1, "hidden_dim":390,  "data_num":3400, "grayscale_model": False, "l2_regularizer_weight":0.001, "penalty_anneal_iters":200, "lr": 0.0004, "steps":1500, "envs_num":2, "penalty_weight":10000, "cons_ratio": "0.9_0.8_0.1", "noise_ratio":0.25}
-exclude_names = [
-    "print_every",
-    "variance_gamma",
-    "data_num",
-    "hidden_dim",
-    "grayscale_model"
-]
-
-logger_key= args2header(
-    flags, default_dict=default_dict, exclude_names=exclude_names)
-print('Flags:')
-
-logger_path = "logs/%s" % logger_key
-if not os.path.exists(logger_path):
-    os.makedirs(logger_path)
-save_args(flags, logger_path)
-save_cmd(sys.argv, logger_path)
-mode='w'
-csv_logger = LYCSVLogger(os.path.join(logger_path, 'res.csv'),  mode=mode)
-
-for k,v in sorted(vars(flags).items()):
-    print("\t{}: {}".format(k, v))
+random.seed(1) # Fix the random seed of dataset
+# Because random package is used to generate CifarMnist dataset
+# We fix the randomness of the dataset.
 
 
 final_train_accs = []
 final_test_accs = []
 for restart in range(flags.n_restarts):
-    print("Restart", restart)
 
     if flags.dataset == "CMNIST":
         dp = CMNIST_LYDP(flags)
@@ -262,27 +238,6 @@ for restart in range(flags.n_restarts):
                 train_penalty.detach().cpu().numpy(),
                 test_acc.detach().cpu().numpy(),
             )
-            stats_dict = {
-                "train_nll": train_nll.detach().cpu().numpy(),
-                "train_acc": train_acc.detach().cpu().numpy(),
-                "train_minacc": train_minacc.detach().cpu().numpy(),
-                "train_majacc": train_majacc.detach().cpu().numpy(),
-                "train_penalty": train_penalty.detach().cpu().numpy(),
-                "test_acc": test_acc.detach().cpu().numpy(),
-                "test_minacc": test_minacc.detach().cpu().numpy(),
-                "test_majacc": test_majacc.detach().cpu().numpy(),
-            }
-
-            csv_logger.log(
-                epoch=step,
-                batch=step,
-                stats_dict=stats_dict,
-                restart=restart)
-
     final_train_accs.append(train_acc.detach().cpu().numpy())
     final_test_accs.append(test_acc.detach().cpu().numpy())
-    print('Final train acc (mean/std across restarts so far):')
-    print(np.mean(final_train_accs), np.std(final_train_accs))
-    print('Final test acc (mean/std across restarts so far):')
-    print(np.mean(final_test_accs), np.std(final_test_accs))
-csv_logger.close()
+    print('Final test acc: %s' % np.mean(final_test_accs))

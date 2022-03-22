@@ -1,4 +1,5 @@
 import os
+import random
 from mnistcifar_utils import get_mnist_cifar_env
 import pdb
 import torch
@@ -128,6 +129,8 @@ class CifarMnistSpuriousDataset(Dataset):
         return tuple(subsets)
 
 def get_data_loader_cifarminst(batch_size, train_num, test_num, cons_ratios, train_envs_ratio, label_noise_ratio=None, augment_data=True, cifar_classes=(1, 9), color_spurious=False, transform_data_to_standard=1, oracle=0):
+    np.random.seed(1)
+    random.seed(1) # Fix the random seed of dataset
     spdc = CifarMnistSpuriousDataset(
         train_num=train_num,
         test_num=test_num,

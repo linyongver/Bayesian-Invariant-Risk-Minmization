@@ -470,6 +470,8 @@ def get_mnist_cifar(mnist_classes=(0,1), cifar_classes=(1,9), c={0,1,2,3,4},
     return (Xtr, Ytr), (Xte, Yte)
 
 def get_mnist_cifar_env(mnist_classes=(0,1), cifar_classes=(1,9), c={0,1,2,3,4}, randomize_mnist=False, randomize_cifar=False, train_num=None, test_num=None, cons_ratios=None, train_envs_ratio=None, label_noise_ratio=None, color_spurious=False, oracle=0):
+    np.random.seed(1)
+    random.seed(1) # Fix the random seed of dataset
     y1, y2 = mnist_classes
     (Xtrm, Ytrm), (Xtem, Ytem) = get_binary_mnist(y1=y1, y2=y2)
     if oracle:
