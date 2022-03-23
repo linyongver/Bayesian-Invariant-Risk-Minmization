@@ -34,10 +34,26 @@ def return_model(flags):
             model_type="bayes_batch"
         else:
             raise("Please specify the bayesian irm model for this dataset!")
+        flags = update_flags(flags)
     else:
         raise Exception
     return flags, model_type
 
+
+def update_flags(flags):
+    assert flags.prior_sd_coef == "birm"
+    if flags.dataset == "CMNIST":
+        if flags.data_num == "5000":
+            flags.prior_sd_coef =1350
+        else:
+            flags.prior_sd_coef =1200
+    elif flags.dataset == "ColoredObject":
+        flags.prior_sd_coef=1000
+    elif flags.dataset == "CifarMnist":
+        flags.prior_sd_coef=1500
+    else:
+        raise("Please specify the bayesian irm model for this dataset!")
+    return flags
 
 def torch_bernoulli(p, size):
     return (torch.rand(size) < p).float()
