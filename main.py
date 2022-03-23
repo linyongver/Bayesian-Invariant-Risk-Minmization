@@ -32,8 +32,8 @@ parser.add_argument('--prior_sd_coef', type=float,default=50)
 parser.add_argument('--data_num', type=int, default=2000)
 parser.add_argument('--lr', type=float, default=0.001)
 parser.add_argument('--env_type', default="linear", type=str, choices=["2_group", "cos", "linear"])
-parser.add_argument('--irm_type', default="irmv1", type=str, choices=["bayes_irmv1b", "bayes_rex","bayes_irmv1", "irmv1b", "erm","irmv1"])
-parser.add_argument('--n_restarts', type=int, default=10)
+parser.add_argument('--irm_type', default="birm", type=str, choices=["birm", "irmv1", "erm"])
+parser.add_argument('--n_restarts', type=int, default=1)
 parser.add_argument('--image_scale', type=int, default=64)
 parser.add_argument('--hidden_dim', type=int, default=16)
 parser.add_argument('--cons_ratio', type=str, default="0.999_0.7_0.1")
@@ -55,6 +55,7 @@ random.seed(1) # Fix the random seed of dataset
 
 final_train_accs = []
 final_test_accs = []
+flags, model_type = return_model(flags)
 for restart in range(flags.n_restarts):
 
     if flags.dataset == "CMNIST":
@@ -112,14 +113,14 @@ for restart in range(flags.n_restarts):
     for step in range(flags.steps):
         mlp.train()
         train_x, train_y, train_g, train_c= dp.fetch_train()
-        if irm_type == "irmv1":
+        if model_type == "irmv1":
             train_logits = ebd(train_g).view(-1, 1) * mlp(train_x)
             train_nll = mean_nll(train_logits, train_y)
             grad = autograd.grad(
                 train_nll * flags.envs_num, ebd.parameters(),
                 create_graph=True)[0]
             train_penalty =  torch.mean(grad**2)
-        elif irm_type == "irmv1b":
+        elif model_type == "irmv1b":
             e1 = (train_g == 0).view(-1).nonzero().view(-1)
             e2 = (train_g == 1).view(-1).nonzero().view(-1)
             e1 = e1[torch.randperm(len(e1))]
@@ -138,7 +139,7 @@ for restart in range(flags.n_restarts):
                 train_nll2 * flags.envs_num, ebd.parameters(),
                 create_graph=True)[0]
             train_penalty = torch.mean(grad1 * grad2)
-        elif irm_type == "bayes_rex":
+        elif model_type == "bayes_variance":
             sampleN = 10
             train_penalty = 0
             train_logits = mlp(train_x)
@@ -155,7 +156,7 @@ for restart in range(flags.n_restarts):
                 loss_t = torch.stack(loss_list)
                 train_penalty0 = ((loss_t - loss_t.mean())** 2).mean()
                 train_penalty +=  1/sampleN * train_penalty0
-        elif flags.irm_type == "bayes_irmv1":
+        elif model_type == "bayes_fullbatch":
             sampleN = 10
             train_penalty = 0
             train_logits = mlp(train_x)
@@ -167,7 +168,7 @@ for restart in range(flags.n_restarts):
                     train_nll * flags.envs_num, ebd.parameters(),
                     create_graph=True)[0]
                 train_penalty +=  1/sampleN * torch.mean(grad**2)
-        elif flags.irm_type == "bayes_irmv1b":
+        elif model_type == "bayes_batch":
             sampleN = 10
             train_penalty = 0
             train_logits = mlp(train_x)

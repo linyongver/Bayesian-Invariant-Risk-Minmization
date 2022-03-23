@@ -12,6 +12,32 @@ import os
 import sys
 from torch import nn, optim, autograd
 
+def return_model(flags):
+    model_type = None
+    if flags.irm_type = "erm":
+        model_type = "erm"
+    elif flags.irm_type = "irmv1":
+        if flags.dataset == "CMNIST":
+            model_type="irmv1"
+        elif flags.dataset == "ColoredObject":
+            model_type="irmv1b"
+        elif flags.dataset == "CifarMnist":
+            model_type="irmv1b"
+        else:
+            raise("Please specify the irm model for this dataset!")
+    elif flags.irm_type == "birm":
+        if flags.dataset == "CMNIST":
+            model_type="bayes_fullbatch"
+        elif flags.dataset == "ColoredObject":
+            model_type="bayes_variance"
+        elif flags.dataset == "CifarMnist":
+            model_type="bayes_batch"
+        else:
+            raise("Please specify the bayesian irm model for this dataset!")
+    else:
+        raise Exception
+    return flags, model_type
+
 
 def torch_bernoulli(p, size):
     return (torch.rand(size) < p).float()
