@@ -14,7 +14,7 @@ from model import resnet18_sepfc_us
 from model import MLP
 
 sys.path.append('dataset_scripts')
-from utils import concat_envs,eval_acc_class,eval_acc_reg,mean_nll_class,mean_accuracy_class,mean_nll_reg,mean_accuracy_reg,pretty_print
+from utils import concat_envs,eval_acc_class,eval_acc_reg,mean_nll_class,mean_accuracy_class,mean_nll_reg,mean_accuracy_reg,pretty_print, return_model
 from utils import CMNIST_LYDP
 from utils import CIFAR_LYPD, COCOcolor_LYPD
 from utils import mean_nll_multi_class,eval_acc_multi_class,mean_accuracy_multi_class

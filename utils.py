@@ -14,9 +14,9 @@ from torch import nn, optim, autograd
 
 def return_model(flags):
     model_type = None
-    if flags.irm_type = "erm":
+    if flags.irm_type == "erm":
         model_type = "erm"
-    elif flags.irm_type = "irmv1":
+    elif flags.irm_type == "irmv1":
         if flags.dataset == "CMNIST":
             model_type="irmv1"
         elif flags.dataset == "ColoredObject":
