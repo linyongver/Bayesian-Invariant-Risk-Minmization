@@ -41,7 +41,7 @@ def return_model(flags):
 
 
 def update_flags(flags):
-    assert flags.prior_sd_coef == "birm"
+    assert flags.irm_type == "birm"
     if flags.dataset == "CMNIST":
         if flags.data_num == "5000":
             flags.prior_sd_coef =1350

@@ -28,7 +28,6 @@ parser.add_argument('--dataset', type=str, default="CMNIST", choices=["CifarMnis
 parser.add_argument('--opt', type=str, default="adam", choices=["adam", "sgd"])
 parser.add_argument('--l2_regularizer_weight', type=float,default=0.001)
 parser.add_argument('--print_every', type=int,default=100)
-parser.add_argument('--prior_sd_coef', type=float,default=50)
 parser.add_argument('--data_num', type=int, default=2000)
 parser.add_argument('--lr', type=float, default=0.001)
 parser.add_argument('--env_type', default="linear", type=str, choices=["2_group", "cos", "linear"])
