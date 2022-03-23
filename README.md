@@ -13,7 +13,7 @@ To install the necessary packages for the project, please run: `pip install -r r
 
 # Quick Start (For reproducing results)
 1. To perform BIRM on CMNIST (with 20K training data). Run the command `sh auto_CMNIST.sh`. The expected test accuracy is `67.0±1.8`.
-2. To perform BIRM on ColoredObject. First run `sh prepare_coco_dataset.sh` to download MSCOCO dataset and preprocess the images. Second run the command `sh auto_CifarMnist.sh` to train BRIM. The expected test accuracy is `78.1±0.6`.
+2. To perform BIRM on ColoredObject. First run `sh prepare_coco_dataset.sh` to download MSCOCO dataset and preprocess the images (it may take several hours, please be patient). Second run the command `sh auto_CifarMnist.sh` to train BRIM. The expected test accuracy is `78.1±0.6`.
 3. To perform BIRM on CifarMnist. Run the command `sh auto_ColoredObject.sh`. The expected test accuracy is `59.3±2.3`.
 
 Important arguments:
