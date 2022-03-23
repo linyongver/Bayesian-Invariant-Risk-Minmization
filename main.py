@@ -35,8 +35,6 @@ parser.add_argument('--irm_type', default="birm", type=str, choices=["birm", "ir
 parser.add_argument('--n_restarts', type=int, default=1)
 parser.add_argument('--image_scale', type=int, default=64)
 parser.add_argument('--hidden_dim', type=int, default=16)
-parser.add_argument('--cons_ratio', type=str, default="0.999_0.7_0.1")
-parser.add_argument('--noise_ratio', type=float, default=0)
 parser.add_argument('--step_gamma', type=float, default=0.1)
 parser.add_argument('--penalty_anneal_iters', type=int, default=200)
 parser.add_argument('--penalty_weight', type=float, default=10000.0)

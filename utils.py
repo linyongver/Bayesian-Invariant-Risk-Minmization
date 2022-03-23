@@ -500,13 +500,14 @@ class COCOcolor_LYPD(LYDataProvider):
     def __init__(self, flags):
         super(COCOcolor_LYPD, self).__init__()
         self.flags = flags
+        self.flags.image_scale = 32
         self.preprocess_data()
 
     def preprocess_data(self):
-        sp_ratio_list = [float(x) for x in self.flags.cons_ratio.split("_")]
+        sp_ratio_list = [float(x) for x in "0.999_0.7_0.1".split("_")]
         self.train_dataset, self.test_dataset = get_spcoco_dataset(
             sp_ratio_list=sp_ratio_list,
-            noise_ratio=self.flags.noise_ratio,
+            noise_ratio=0.05,
             num_classes=2,
             flags=self.flags)
         self.train_loader = torch.utils.data.DataLoader(
