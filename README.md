@@ -22,6 +22,7 @@ Important arguments:
 * `data_num`: (only valid for dataset CMNIST) the number of training data;
 * `penalty_weight`:  the weight of the BIRM penalty;
 * `penalty_anneal_iters`: the steps that we trians ERM first, after which BIRM penalty will be applied.
+* `step_gamma`: the ratio of step decay, `0.1` means the learning rate will decay by `0.1` at the middle of the training steps.
 # Datasets
 ## Implemented Datasets
 * CMNIST: the most popular dataset in IRM literatures. The invariant feature is the shape of the digit from MNIST and the spurious feature is the attached color.
