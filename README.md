@@ -17,7 +17,8 @@ To install the necessary packages for the project, please run: `pip install -r r
 3. To perform BIRM on CifarMnist. Run the command `sh auto_ColoredObject.sh`. The expected test accuracy is `59.3±2.3`.
 
 Important arguments:
-* `dataset`: chosen in `mnist`, `cifar` and `coco_color`;
+* `dataset`: chosen in `CMNIST`, `ColoredObject` and `CifarMnist`;
+* `l2_regularizer_weight`: weight decay coeffient;
 * `lr`: learning rate;
 * `opt`: the optimizer. By default, we use `adam` for CMNIST and use `sgd` for ColoredObject and CifarMnist; 
 * `data_num`: (only valid for dataset CMNIST) the number of training data;
