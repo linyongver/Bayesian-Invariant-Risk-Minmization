@@ -41,18 +41,26 @@ def return_model(flags):
 
 
 def update_flags(flags):
-    assert flags.irm_type == "birm"
     if flags.dataset == "CMNIST":
-        if flags.data_num == "5000":
-            flags.prior_sd_coef =1350
-        else:
-            flags.prior_sd_coef =1200
+        pass
     elif flags.dataset == "ColoredObject":
-        flags.prior_sd_coef=1000
+        flags.data_num =12000
     elif flags.dataset == "CifarMnist":
-        flags.prior_sd_coef=1500
+        flags.data_num =10000
     else:
-        raise("Please specify the bayesian irm model for this dataset!")
+        pass
+    if flags.irm_type == "birm":
+        if flags.dataset == "CMNIST":
+            if flags.data_num == "5000":
+                flags.prior_sd_coef =1350
+            else:
+                flags.prior_sd_coef =1200
+        elif flags.dataset == "ColoredObject":
+            flags.prior_sd_coef=1000
+        elif flags.dataset == "CifarMnist":
+            flags.prior_sd_coef=1500
+        else:
+            raise("Please specify the bayesian irm model for this dataset!")
     return flags
 
 def torch_bernoulli(p, size):
