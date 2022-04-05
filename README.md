@@ -54,9 +54,9 @@ If you use or extend our work, please cite the following paper:
 ```
 @inproceedings{lin2022BIRM,
     title = {Bayesian Invariant Risk Minmization},
-    author = {Lin, Yong  and
-      Dong, Hanze  and
-      Wang, Hao  and
+    author = {Lin, Yong and
+      Dong, Hanze and
+      Wang, Hao and
       Zhang, Tong},
     booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
     year = {2022},
