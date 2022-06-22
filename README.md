@@ -1,5 +1,5 @@
 # Bayesian Invariant Risk Minmization (BIRM)
-This is the source code for the CVPR 2022 paper entitled [Bayesian Invariant Risk Minimization]().
+This is the source code for the CVPR 2022 paper entitled [Bayesian Invariant Risk Minimization](https://openaccess.thecvf.com/content/CVPR2022/papers/Lin_Bayesian_Invariant_Risk_Minimization_CVPR_2022_paper.pdf).
 
 Our implementation is based on the source code of [IRM](https://github.com/facebookresearch/InvariantRiskMinimization),  [ColoredObject](https://github.com/Faruk-Ahmed/predictive_group_invariance), and [CifarMnist](https://github.com/HKUST-MLResearch/IRMBed).
 
@@ -52,16 +52,12 @@ For personal communication related to BayesianIRM, please contact Yong Lin (`yli
 # Reference 
 If you use or extend our work, please cite the following paper:
 ```
-@inproceedings{lin2022BIRM,
-    title = {Bayesian Invariant Risk Minmization},
-    author = {Lin, Yong and
-      Dong, Hanze and
-      Wang, Hao and
-      Zhang, Tong},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-    year = {2022},
+@inproceedings{lin2022bayesian,
+  title={Bayesian Invariant Risk Minimization},
+  author={Lin, Yong and Dong, Hanze and Wang, Hao and Zhang, Tong},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={16021--16030},
+  year={2022}
 }
 ```
-
-
 
